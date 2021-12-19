@@ -2,7 +2,7 @@ package com.orm.emrpatientservice.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.orm.emrpatientservice.data.constant.BloodGroup;
-import com.orm.emrpatientservice.data.constant.Genotype;
+import com.orm.emrpatientservice.data.form.ClinicalInfoForm;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -20,10 +20,22 @@ public class PatientClinicalInfo extends BaseEntity{
     private Double weight;
     private Double height;
     @Enumerated(EnumType.STRING)
-    private Genotype genotype;
-    @Enumerated(EnumType.STRING)
     private BloodGroup bloodGroup;
+    @Lob
     private String allergies;
+
+    public static void build(ClinicalInfoForm form, PatientClinicalInfo info) {
+        info.setWeight(form.getWeight());
+        info.setHeight(form.getHeight());
+        info.setBloodGroup(BloodGroup.findById(form.getBloodGroup()));
+        info.setAllergies(form.getAllergies());
+    }
+
+    public static void build(ClinicalInfoForm form, PatientClinicalInfo info, Patient p) {
+        PatientClinicalInfo.build(form, info);
+        info.setId(p.getId());
+        info.setPatient(p);
+    }
 
 
     public UUID getId() {
@@ -56,14 +68,6 @@ public class PatientClinicalInfo extends BaseEntity{
 
     public void setHeight(Double height) {
         this.height = height;
-    }
-
-    public Genotype getGenotype() {
-        return genotype;
-    }
-
-    public void setGenotype(Genotype genotype) {
-        this.genotype = genotype;
     }
 
     public BloodGroup getBloodGroup() {
