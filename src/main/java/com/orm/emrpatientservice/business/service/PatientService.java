@@ -29,7 +29,8 @@ public class PatientService {
     }
 
     public Patient addPatient(PatientForm form) {
-        Patient patient = Patient.build(form, new Patient());
+        Patient patient = new Patient();
+        Patient.build(form, patient);
         checkEmail(form.getEmail(), patient);
         patient.setGroups(patientGroupService.findGroups(form.getGroups()));
         return patientRepository.save(patient);
