@@ -29,16 +29,10 @@ public class Patient extends Person {
     @JoinColumn
     private Set<PatientGroup> groups = new HashSet<>();
 
-    public static Patient build(PatientForm form, Patient patient) {
-        patient.setFirstName(capitalize(lowerCase(trim(form.getFirstName()))));
-        patient.setLastName(capitalize(lowerCase(trim(form.getLastName()))));
-        patient.setMiddleName(capitalize(lowerCase(trim(form.getMiddleName()))));
-        patient.setEmail(lowerCase(trim(form.getEmail())));
-        patient.setPhoneNumber(upperCase(trim(form.getPhoneNumber())));
-        patient.setTitle(Title.findByName(form.getTitle()));
+    public static void build(PatientForm form, Patient patient) {
+        Person.build(form, patient);
         patient.setSex(Sex.findByName(form.getSex()));
         patient.setDateOfBirth(Utilities.parseDate(form.getDateOfBirth()));
-        return patient;
     }
 
 
