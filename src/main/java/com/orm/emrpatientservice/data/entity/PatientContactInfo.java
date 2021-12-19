@@ -15,9 +15,9 @@ public class PatientContactInfo {
     @MapsId
     @JsonIgnore
     private Patient patient;
-    @OneToOne
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private NextOfKin nextOfKin;
-    @OneToOne
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
     private Address address;
 
 
