@@ -1,14 +1,15 @@
 package com.orm.emrpatientservice.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.orm.emrpatientservice.data.constant.Education;
-import com.orm.emrpatientservice.data.constant.Language;
-import com.orm.emrpatientservice.data.constant.MaritalStatus;
-import com.orm.emrpatientservice.data.constant.Religion;
+import com.orm.emrpatientservice.data.constant.*;
+import com.orm.emrpatientservice.data.form.ClinicalInfoForm;
+import com.orm.emrpatientservice.data.form.SocialInfoForm;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.UUID;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 @Entity
 public class PatientSocialInfo extends BaseEntity{
@@ -28,6 +29,21 @@ public class PatientSocialInfo extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private Education education;
     private String tribe;
+
+
+    public static void build(SocialInfoForm form, PatientSocialInfo info) {
+        info.setMaritalStatus(MaritalStatus.findByName(form.getMaritalStatus()));
+        info.setReligion(Religion.findByName(form.getReligion()));
+        info.setLanguage(Language.findByName(form.getLanguage()));
+        info.setEducation(Education.findByName(form.getEducation()));
+        info.setTribe(capitalize(lowerCase(trim(form.getTribe()))));
+    }
+
+    public static void build(SocialInfoForm form, PatientSocialInfo info, Patient p) {
+        PatientSocialInfo.build(form, info);
+        info.setId(p.getId());
+        info.setPatient(p);
+    }
 
     public UUID getId() {
         return id;
