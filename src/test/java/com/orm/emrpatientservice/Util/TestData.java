@@ -4,6 +4,7 @@ import com.orm.emrpatientservice.data.constant.State;
 import com.orm.emrpatientservice.data.entity.Address;
 import com.orm.emrpatientservice.data.entity.Patient;
 import com.orm.emrpatientservice.data.form.AddressForm;
+import com.orm.emrpatientservice.data.form.EntryForm;
 import com.orm.emrpatientservice.data.form.NextOfKinForm;
 import com.orm.emrpatientservice.data.form.PatientForm;
 
@@ -18,6 +19,7 @@ public class TestData {
     public final AddressForm addressForm = new AddressForm("18B, Mayegun Street", "Abeokuta", "NG_OG");
     public final NextOfKinForm nextOfKinForm = new NextOfKinForm("mr", "samuel", "badmus", null, "samuelbadmus@gmail.com", "09037282618", "Olabode close, Lekki, Lagos");
     public final Address address = new Address("19B, Mayegun Street", "Abeokuta", State.NG_OG);
+    public final EntryForm entryForm = new EntryForm(UUID.randomUUID().toString(), "username@domain.ext");
     public Patient patient = new Patient();
     public TestData() {
         Patient.build(patientForm, patient);
