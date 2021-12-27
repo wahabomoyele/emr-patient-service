@@ -6,6 +6,7 @@ import com.orm.emrpatientservice.data.entity.Patient;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,8 +21,10 @@ public class Entry extends BaseEntity {
     @MapsId
     @JsonIgnore
     private Patient patient;
-    private LocalDateTime time;
-    private String official;
+    @NotNull
+    private LocalDateTime time = LocalDateTime.now();
+    @NotNull
+    private String staffId;
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Comment> comments = new HashSet<>();
 
@@ -50,12 +53,12 @@ public class Entry extends BaseEntity {
         this.time = time;
     }
 
-    public String getOfficial() {
-        return official;
+    public String getStaffId() {
+        return staffId;
     }
 
-    public void setOfficial(String official) {
-        this.official = official;
+    public void setStaffId(String official) {
+        this.staffId = official;
     }
 
     public Set<Comment> getComments() {
